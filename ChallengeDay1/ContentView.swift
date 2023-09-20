@@ -14,7 +14,7 @@ struct ContentView: View {
     
     
     let convertFromImperialList = ["Inch": 25.4, "Foot": 304.8, "Yard": 914.4, "Mile": 1609344]
-    let convertToMetricList: [String: Double] = ["Millimeter": 1, "Centimeter": 10, "Meter": 1000, "Kilometer": 1000000]
+    let convertToMetricList: [String: Double] = ["Millimeter": pow(10, 0), "Centimeter": pow(10, 1), "Meter": pow(10, 3), "Kilometer": pow(10, 6)]
     
     var outputValue: Double {
         if (inputValue != 0) {
