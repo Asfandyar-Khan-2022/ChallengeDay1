@@ -8,14 +8,59 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+    @State private var inputValue = 0.0
+    @State private var convertFromImperial = "Inch"
+    @State private var convertToMetric = "Millimeter"
+    
+    
+    let convertFromImperialList = ["Inch": 25.4, "Foot": 304.8, "Yard": 914.4, "Mile": 1609344]
+    let convertToMetricList: [String: Double] = ["Millimeter": 1, "Centimeter": 10, "Meter": 1000, "Kilometer": 1000000]
+    
+    var outputValue: Double {
+        if (inputValue != 0) {
+            return (convertFromImperialList[convertFromImperial]! * inputValue) / convertToMetricList[convertToMetric]!
         }
-        .padding()
+        else {
+            return 0
+        }
+    }
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                // Input
+                Section {
+                    TextField("Amount", value: $inputValue, format: .number)
+                }
+                
+                // Convert from imperial
+                Section {
+                    Picker("Convert from imperial", selection: $convertFromImperial) {
+                        ForEach(Array(convertFromImperialList.keys), id: \.self) {
+                            Text($0)
+                        }
+                    }.pickerStyle(.segmented)
+                } header: {
+                    Text("Convert from imperial")
+                }
+                
+                // Convert to metric
+                Section {
+                    Picker("Convert from imperial", selection: $convertToMetric) {
+                        ForEach(Array(convertToMetricList.keys), id: \.self) {
+                            Text($0)
+                        }
+                    }.pickerStyle(.segmented)
+                } header: {
+                    Text("Convert to metric")
+                }
+                
+                // Computed output
+                Section {
+                    Text(outputValue, format: .number).bold()
+                }
+            }
+        }
     }
 }
 
